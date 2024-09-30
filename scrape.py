@@ -6,6 +6,8 @@ import time
 from bs4 import BeautifulSoup
 from dotenv import load_dotenv
 import os
+import re
+import pandas as pd
 
 def scrape_website(website):
     print('Launching chrome browser...')
@@ -64,6 +66,26 @@ def clean_body_content(body_content):
 
     return cleaned_content
 
+
+def cleaned_to_csv(cleaned_content):
+    # Expresión regular para extraer datos
+    patron = re.compile(
+        r"(?P<Modelo>.+)\n"
+        r"\$(?P<Precio>[\d.]+)\n"
+        r"Procesador\n(?P<Procesador>.+)\n"
+        r"Pantalla\n(?P<Pantalla>.+)\n"
+        r"Almacenamiento\n(?P<Almacenamiento>.+)\n"
+        r"Cámara\n(?P<CamaraTrasera>.+?)\s+/\s+(?P<CamaraFrontal>.+)\n"
+        r"Sistema operativo\n(?P<SistemaOperativo>.+)\n"
+        r"Conectividad celular\n(?P<ConectividadCelular>5G)"
+    )
+
+    # Extraer datos y convertirlos a una lista de diccionarios
+    dispositivos = [m.groupdict() for m in patron.finditer(cleaned_content)]
+
+    # Crear DataFrame
+    df = pd.DataFrame(dispositivos)
+    return df
 
 
 def split_dom_content(dom_content, max_length=6000):

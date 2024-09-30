@@ -16,9 +16,10 @@ if st.button("Scrape Website"):
         dom_content = scrape_website(url)
         body_content = extract_body_content(dom_content)
         cleaned_content = clean_body_content(body_content)
-
+        df = cleaned_to_csv(cleaned_content)
+        print(df)
         # Store the DOM content in Streamlit session state
-        st.session_state.dom_content = cleaned_content
+        st.session_state.dom_content = df
 
         # Initialize chat history in session state
         if "chat_history" not in st.session_state:
@@ -26,33 +27,35 @@ if st.button("Scrape Website"):
 
         # Display the DOM content in an expandable text box
         with st.expander("View DOM Content"):
-            st.text_area("DOM Content", cleaned_content, height=300)
+            st.dataframe(df)
 
 # Step 2: Chat with the DOM content
 if "dom_content" in st.session_state:
-    # Display chat history
+    # Mostrar historial de chat si existe
     if st.session_state.chat_history:
-        st.write("Chat History:")
+        st.write("Historial de Chat:")
         for message in st.session_state.chat_history:
-            st.write(f"You: {message['question']}")
+            st.write(f"Tú: {message['question']}")
             st.write(f"AI: {message['answer']}")
 
-    # Input for new question
-    new_question = st.text_input("Ask something about the content")
+    # Entrada para una nueva pregunta
+    new_question = st.text_input("Haz una pregunta sobre el contenido")
 
-    if st.button("Send"):
+    if st.button("Enviar"):
         if new_question:
-            st.write("Parsing the content...")
+            st.write("Analizando el contenido...")
 
-            # Parse the content with Ollama
-            dom_chunks = split_dom_content(st.session_state.dom_content)
+            # Parsear el contenido con Ollama
+            dom_chunks = split_dom_content(st.session_state.dom_content.to_string())
             parsed_result = parse_with_ollama(dom_chunks, new_question)
 
-            # Append the new question and result to chat history
+            # Añadir la nueva pregunta y el resultado al historial de chat
             st.session_state.chat_history.append({
                 "question": new_question,
                 "answer": parsed_result
             })
 
-            # Display the answer
+            # Mostrar la respuesta
             st.write(f"AI: {parsed_result}")
+
+ 

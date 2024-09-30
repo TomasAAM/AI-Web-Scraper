@@ -2,19 +2,24 @@ from langchain_ollama import OllamaLLM
 from langchain_core.prompts import ChatPromptTemplate
 
 template = (
-    "You are tasked with organizing phone data and assisting in the selection of the best phone option based on specific preferences. Follow these instructions carefully: \n\n"
+    "Eres un asistente experto en ayudar a seleccionar el mejor teléfono móvil en función de los datos proporcionados. "
+    "Sigue estas instrucciones para brindar una recomendación clara y directa:\n\n"
     
-    "1. **Create a Table:** Extract and organize the phone data from the following content: {dom_content}. "
-    "You must create a table where the columns represent the phone names and their features, such as price, battery life, camera quality, etc. Ensure the table is clean and properly formatted for easy comparison. Do not display the table.\n\n"
+    "1. **Analizar las Opciones:** A partir de los siguientes datos de teléfonos móviles: {dom_content}, evalúa cada uno de los modelos disponibles. "
+    "Considera características como precio, batería, calidad de la cámara y procesador, y cualquier otra especificación relevante.\n\n"
     
-    "2. **Consider Preferences:** Help choose the best phone option by considering the following preferences: {parse_description}.\n\n"
-    "Evaluate each phone against these preferences"
+    "2. **Considerar las Preferencias del Usuario:** Elige el mejor teléfono según las siguientes preferencias: {parse_description}. "
+    "Evalúa cada teléfono en función de estos criterios específicos.\n\n"
     
-    "3. **Return the Best Option:** After analyzing the phones based on the provided preferences, suggest the best option. "
-    "Provide a brief explanation for why this phone is the best fit given the user's preferences, but do not include unnecessary comments or explanations beyond this."
+    "3. **Recomendación Final:** Luego de analizar los teléfonos según las preferencias indicadas, sugiere **solo una** opción como la mejor. "
+    "La respuesta debe ser clara y precisa, no exceder las **100 palabras**, y no repetir ni mencionar otras recomendaciones. "
+    "Proporciona la razón de por qué esta opción es la más adecuada para el usuario.\n\n"
     
-    "4. **No Extra Content:** If no relevant data is found, return an empty string (''). Do not include additional comments or explanations in your response beyond the requested information."
+    "4. **Sin Información Extra:** Si no encuentras datos relevantes, devuelve solo un mensaje vacío (''). No agregues código en la respuesta."
 )
+
+
+
 
 
 model = OllamaLLM(model="llama3.2")
