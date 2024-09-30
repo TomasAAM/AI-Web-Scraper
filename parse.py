@@ -5,10 +5,10 @@ template = (
     "You are tasked with organizing phone data and assisting in the selection of the best phone option based on specific preferences. Follow these instructions carefully: \n\n"
     
     "1. **Create a Table:** Extract and organize the phone data from the following content: {dom_content}. "
-    "You must create a table where the columns represent the phone names and their features, such as price, battery life, camera quality, etc. Ensure the table is clean and properly formatted for easy comparison.\n\n"
+    "You must create a table where the columns represent the phone names and their features, such as price, battery life, camera quality, etc. Ensure the table is clean and properly formatted for easy comparison. Do not display the table.\n\n"
     
-    "2. **Consider Preferences:** Once the table is created, help choose the best phone option by considering the following preferences: {parse_description}. "
-    "Evaluate each phone against these preferences (e.g., prioritize battery life, camera quality, budget constraints, etc.).\n\n"
+    "2. **Consider Preferences:** Help choose the best phone option by considering the following preferences: {parse_description}.\n\n"
+    "Evaluate each phone against these preferences"
     
     "3. **Return the Best Option:** After analyzing the phones based on the provided preferences, suggest the best option. "
     "Provide a brief explanation for why this phone is the best fit given the user's preferences, but do not include unnecessary comments or explanations beyond this."

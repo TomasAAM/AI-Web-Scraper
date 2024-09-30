@@ -9,6 +9,7 @@ url = st.text_input("Enter Website URL")
 # Step 1: Scrape the Website
 if st.button("Scrape Website"):
     if url:
+        
         st.write("Scraping the website...")
 
         # Scrape the website
